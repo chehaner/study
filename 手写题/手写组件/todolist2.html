@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 Todo List</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Todo List</h1>
+        <input v-model="newTask" @keyup.enter="addTask" placeholder="Add a new task" />
+        <button @click="addTask">Add</button>
+
+        <ul>
+            <li v-for="(task, index) in tasks" :key="index">
+                {{ task }}
+                <button @click="removeTask(index)">Delete</button>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        const app = createApp({
+            setup() {
+                const newTask = ref('');
+                const tasks = ref([]);
+
+                const addTask = () => {
+                    if (newTask.value.trim() !== '') {
+                        tasks.value.push(newTask.value.trim());
+                        newTask.value = ''; // Clear input field
+                    }
+                };
+
+                const removeTask = (index) => {
+                    tasks.value.splice(index, 1); // Remove task at specified index
+                };
+
+                return {
+                    newTask,
+                    tasks,
+                    addTask,
+                    removeTask
+                };
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Todo List</title>
+    </head>
+    <body>
+        <div>
+            <h1>Todo List</h1>
+            <input type="text" id="new-task"/>
+            <button id="add-task">添加</button>
+            <ul id="todo-list"></ul>
+        </div>
+        <script>
+            const addTaskButton = document.getElementById('add-task');
+            const newTaskInput = document.getElementById('new-task');
+            const todoList = document.getElementById('todo-list');
+
+            // 添加任务
+            function addTask() {
+                const taskText = newTaskInput.value.trim();
+                
+                if (taskText === '') return; // 如果输入框为空，什么都不做
+                
+                // 创建新的列表项
+                const li = document.createElement('li');
+                li.textContent = taskText;
+                
+                // 创建删除按钮
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = function () {
+                    todoList.removeChild(li); // 删除任务
+                };
+                
+                // 把删除按钮添加到列表项
+                li.appendChild(deleteButton);
+                
+                // 将新任务添加到todo-list
+                todoList.appendChild(li);
+                
+                // 清空输入框
+                newTaskInput.value = '';
+            }
+
+            // 绑定点击事件
+            addTaskButton.addEventListener('click', addTask);
+
+            // 也可以通过回车键添加任务
+            newTaskInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    addTask();
+                }
+            });
+        </script>
+    </body>
+</html>
